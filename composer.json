@@ -1,0 +1,21 @@
+{
+    "name": "fize/image",
+    "description": "A common image manipulation class library. produced by FizeChan.",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "FizeChan",
+            "email": "chenfengzhan@qq.com"
+        }
+    ],
+    "require": {
+		"php": ">=7.0.0",
+		"ext-gd": "*",
+		"ext-exif": "*"
+	},
+	"autoload": {
+        "psr-4": {
+            "fize\\image\\": "src"
+        }
+    }
+}
