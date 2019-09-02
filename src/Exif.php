@@ -4,7 +4,7 @@ namespace fize\image;
 
 /**
  * 图像元数据操作类
- * @notice 使用该类时需php启用exif扩展
+ * @package fize\image
  */
 class Exif
 {
@@ -13,7 +13,7 @@ class Exif
      * 当前使用的图像文件完整路径
      * @var string
      */
-    private $_filename;
+    private $filename;
 
 
     /**
@@ -22,7 +22,7 @@ class Exif
      */
     public function __construct($filename)
     {
-        $this->_filename = $filename;
+        $this->filename = $filename;
     }
 
     /**
@@ -31,7 +31,7 @@ class Exif
      */
     public function imagetype()
     {
-        return exif_imagetype($this->_filename);
+        return exif_imagetype($this->filename);
     }
 
     /**
@@ -43,7 +43,7 @@ class Exif
      */
     public function readData($sections = null, $arrays = false, $thumbnail = false)
     {
-        return exif_read_data($this->_filename, $sections, $arrays, $thumbnail);
+        return exif_read_data($this->filename, $sections, $arrays, $thumbnail);
     }
 
     /**
@@ -65,6 +65,6 @@ class Exif
      */
     public function thumbnail(&$width = null, &$height = null, &$imagetype = null)
     {
-        return exif_thumbnail($this->_filename, $width, $height, $imagetype);
+        return exif_thumbnail($this->filename, $width, $height, $imagetype);
     }
 }

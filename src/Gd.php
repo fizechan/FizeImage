@@ -5,6 +5,7 @@ namespace fize\image;
 
 /**
  * 图片GD底层类
+ * @package fize\image
  */
 class Gd
 {
@@ -12,12 +13,12 @@ class Gd
     /**
      * @var string 文件路径
      */
-    private $_file;
+    private $file;
 
     /**
      * @var resource 图像资源
      */
-    private $_resource;
+    private $resource;
 
     /**
      * 初始化
@@ -25,17 +26,17 @@ class Gd
      * @param string $from 从指定资源创建
      * @param array $options 额外选项，$filename为null时，该参数必须指定
      */
-    public function __construct($filename = null, $from = null, array $options =[])
+    public function __construct($filename = null, $from = null, array $options = [])
     {
-        $this->_file = $filename;
-        if($from) {
-            $this->_resource = $this->createFrom($filename, $from, $options);
+        $this->file = $filename;
+        if ($from) {
+            $this->resource = $this->createFrom($filename, $from, $options);
         } else {
-            if(isset($options['width']) && isset($options['height'])) {
+            if (isset($options['width']) && isset($options['height'])) {
                 $width = $options['width'];
                 $height = $options['height'];
                 $truecolor = isset($options['truecolor']) ? $options['truecolor'] : true;
-                $this->_resource = $this->create($width, $height, $truecolor);
+                $this->resource = $this->create($width, $height, $truecolor);
             }
         }
     }
@@ -45,9 +46,9 @@ class Gd
      */
     public function __destruct()
     {
-        if ($this->_resource) {
-            $this->destroy($this->_resource);
-            $this->_resource = null;
+        if ($this->resource) {
+            $this->destroy($this->resource);
+            $this->resource = null;
         }
     }
 
@@ -67,7 +68,7 @@ class Gd
      */
     public function getSize(array &$imageinfo = null)
     {
-        return getimagesize($this->_file, $imageinfo);
+        return getimagesize($this->file, $imageinfo);
     }
 
     /**
@@ -124,99 +125,99 @@ class Gd
      * @param array $options 可选的参数
      * @return bool 如果是直接显示图像则返回null
      */
-    public function output($type = null, $filename = null, array $options =[])
+    public function output($type = null, $filename = null, array $options = [])
     {
-        if(is_null($type)) {
+        if (is_null($type)) {
             $type = $this->getType();
         }
         switch (strtolower($type)) {
             case 'bmp':
                 $compressed = isset($options['compressed']) ? $options['compressed'] : true;
-                if($filename) {
-                    return imagebmp($this->_resource, $filename, $compressed);
+                if ($filename) {
+                    return imagebmp($this->resource, $filename, $compressed);
                 } else {
                     header('Content-type: ' . self::typeToMimeType(IMAGETYPE_BMP));
-                    imagebmp($this->_resource, null, $compressed);
+                    imagebmp($this->resource, null, $compressed);
                 }
                 break;
             case 'gd':
-                if($filename) {
-                    return imagegd($this->_resource, $filename);
+                if ($filename) {
+                    return imagegd($this->resource, $filename);
                 } else {
-                    imagegd($this->_resource, null);
+                    imagegd($this->resource, null);
                 }
                 break;
             case 'gd2':
                 $chunk_size = isset($options['chunk_size']) ? $options['chunk_size'] : null;
                 $type = isset($options['type']) ? $options['type'] : null;
-                if($filename) {
-                    return imagegd2($this->_resource, $filename, $chunk_size, $type);
+                if ($filename) {
+                    return imagegd2($this->resource, $filename, $chunk_size, $type);
                 } else {
-                    imagegd2($this->_resource, null, $chunk_size, $type);
+                    imagegd2($this->resource, null, $chunk_size, $type);
                 }
                 break;
             case 'gif':
-                if($filename) {
-                    return imagegif($this->_resource, $filename);
+                if ($filename) {
+                    return imagegif($this->resource, $filename);
                 } else {
                     header('Content-type: ' . self::typeToMimeType(IMAGETYPE_GIF));
-                    imagegif($this->_resource);
+                    imagegif($this->resource);
                 }
                 break;
             case 'jpeg':
                 $quality = isset($options['quality']) ? $options['quality'] : null;
-                if($filename) {
-                    return imagejpeg($this->_resource, $filename, $quality);
+                if ($filename) {
+                    return imagejpeg($this->resource, $filename, $quality);
                 } else {
                     header('Content-type: ' . self::typeToMimeType(IMAGETYPE_JPEG));
-                    imagejpeg($this->_resource, null, $quality);
+                    imagejpeg($this->resource, null, $quality);
                 }
                 break;
             case 'png':
                 $quality = isset($options['quality']) ? $options['quality'] : null;
                 $filters = isset($options['filters']) ? $options['filters'] : null;
-                if($filename) {
-                    return imagepng($this->_resource, $filename, $quality, $filters);
+                if ($filename) {
+                    return imagepng($this->resource, $filename, $quality, $filters);
                 } else {
                     header('Content-type: ' . self::typeToMimeType(IMAGETYPE_PNG));
-                    imagepng($this->_resource, null, $quality, $filters);
+                    imagepng($this->resource, null, $quality, $filters);
                 }
                 break;
             case 'wbmp':
-                if(function_exists('imagewbmp')) {
+                if (function_exists('imagewbmp')) {
                     $foreground = isset($options['foreground']) ? $options['foreground'] : null;
-                    if($filename) {
-                        return imagewbmp($this->_resource, $filename, $foreground);
+                    if ($filename) {
+                        return imagewbmp($this->resource, $filename, $foreground);
                     } else {
                         header('Content-type: ' . self::typeToMimeType(IMAGETYPE_WBMP));
-                        imagewbmp($this->_resource, null, $foreground);
+                        imagewbmp($this->resource, null, $foreground);
                     }
                 } elseif (function_exists('image2wbmp')) {
                     $threshold = isset($options['threshold']) ? $options['threshold'] : null;
-                    if($filename) {
-                        return image2wbmp($this->_resource, $filename, $threshold);
+                    if ($filename) {
+                        return image2wbmp($this->resource, $filename, $threshold);
                     } else {
                         header('Content-type: ' . self::typeToMimeType(IMAGETYPE_WBMP));
-                        image2wbmp($this->_resource, null, $threshold);
+                        image2wbmp($this->resource, null, $threshold);
                     }
                 }
                 break;
             case 'webp':
                 $quality = isset($options['quality']) ? $options['quality'] : 80;
-                if($filename) {
-                    return imagewebp($this->_resource, $filename, $quality);
+                if ($filename) {
+                    return imagewebp($this->resource, $filename, $quality);
                 } else {
                     header('Content-type: ' . self::typeToMimeType(IMAGETYPE_WEBP));
-                    imagewebp($this->_resource, null, $quality);
+                    imagewebp($this->resource, null, $quality);
                 }
                 break;
             case 'xbm':
                 $foreground = isset($options['foreground']) ? $options['foreground'] : null;
-                if($filename) {
-                    return imagexbm($this->_resource, $filename, $foreground);
+                if ($filename) {
+                    return imagexbm($this->resource, $filename, $foreground);
                 } else {
                     header('Content-type: ' . self::typeToMimeType(IMAGETYPE_XBM));
-                    imagexbm($this->_resource, null, $foreground);
+                    imagexbm($this->resource, null, $foreground);
                 }
                 break;
         }
@@ -231,8 +232,8 @@ class Gd
      */
     public function affine(array $affine, array $clip = null)
     {
-        $resource = imageaffine($this->_resource, $affine, $clip);
-        $this->_resource = $resource;
+        $resource = imageaffine($this->resource, $affine, $clip);
+        $this->resource = $resource;
         return $resource;
     }
 
@@ -265,7 +266,7 @@ class Gd
      */
     public function alphaBlending($blendmode)
     {
-        return imagealphablending($this->_resource, $blendmode);
+        return imagealphablending($this->resource, $blendmode);
     }
 
     /**
@@ -275,7 +276,7 @@ class Gd
      */
     public function antialias($enabled)
     {
-        return imageantialias($this->_resource, $enabled);
+        return imageantialias($this->resource, $enabled);
     }
 
     /**
@@ -291,7 +292,7 @@ class Gd
      */
     public function arc($cx, $cy, $width, $height, $start, $end, $color)
     {
-        return imagearc($this->_resource, $cx, $cy, $width, $height, $start, $end, $color);
+        return imagearc($this->resource, $cx, $cy, $width, $height, $start, $end, $color);
     }
 
     /**
@@ -305,7 +306,7 @@ class Gd
      */
     public function char($font, $x, $y, $c, $color)
     {
-        return imagechar($this->_resource, $font, $x, $y, $c, $color);
+        return imagechar($this->resource, $font, $x, $y, $c, $color);
     }
 
     /**
@@ -319,24 +320,24 @@ class Gd
      */
     public function charUp($font, $x, $y, $c, $color)
     {
-        return imagecharup($this->_resource, $font, $x, $y, $c, $color);
+        return imagecharup($this->resource, $font, $x, $y, $c, $color);
     }
 
     /**
      * 分配颜色
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @return int 成功返回配色识符，失败返回false
      */
     public function colorAllocate($red, $green, $blue)
     {
-        return imagecolorallocate($this->_resource, $red, $green, $blue);
+        return imagecolorallocate($this->resource, $red, $green, $blue);
     }
 
     /**
      * 分配带透明度颜色
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
@@ -344,7 +345,7 @@ class Gd
      */
     public function colorAllocateAlpha($red, $green, $blue, $alpha)
     {
-        return imagecolorclosestalpha($this->_resource, $red, $green, $blue, $alpha);
+        return imagecolorclosestalpha($this->resource, $red, $green, $blue, $alpha);
     }
 
     /**
@@ -355,24 +356,24 @@ class Gd
      */
     public function colorAt($x, $y)
     {
-        return imagecolorat($this->_resource, $x, $y);
+        return imagecolorat($this->resource, $x, $y);
     }
 
     /**
      * 取得与指定的颜色最接近的颜色索引
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @return int
      */
     public function colorClosest($red, $green, $blue)
     {
-        return imagecolorclosest($this->_resource, $red, $green, $blue);
+        return imagecolorclosest($this->resource, $red, $green, $blue);
     }
 
     /**
      * 取得与指定的颜色加透明度最接近的颜色索引
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
@@ -380,19 +381,19 @@ class Gd
      */
     public function colorClosestAlpha($red, $green, $blue, $alpha)
     {
-        return imagecolorclosestalpha($this->_resource, $red, $green, $blue, $alpha);
+        return imagecolorclosestalpha($this->resource, $red, $green, $blue, $alpha);
     }
 
     /**
      * 取得与给定颜色最接近的色度的黑白色的索引
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @return int
      */
     public function colorClosestHwb($red, $green, $blue)
     {
-        return imagecolorclosesthwb($this->_resource, $red, $green, $blue);
+        return imagecolorclosesthwb($this->resource, $red, $green, $blue);
     }
 
     /**
@@ -402,24 +403,24 @@ class Gd
      */
     public function colorDeallocate($color)
     {
-        return imagecolordeallocate($this->_resource, $color);
+        return imagecolordeallocate($this->resource, $color);
     }
 
     /**
      * 取得指定颜色的索引值
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @return int 如果颜色不在图像的调色板中，返回-1
      */
     public function colorExact($red, $green, $blue)
     {
-        return imagecolorexact($this->_resource, $red, $green, $blue);
+        return imagecolorexact($this->resource, $red, $green, $blue);
     }
 
     /**
      * 取得指定的颜色加透明度的索引值
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
@@ -427,7 +428,7 @@ class Gd
      */
     public function colorExactAlpha($red, $green, $blue, $alpha)
     {
-        return imagecolorexactalpha($this->_resource, $red, $green, $blue, $alpha);
+        return imagecolorexactalpha($this->resource, $red, $green, $blue, $alpha);
     }
 
     /**
@@ -437,24 +438,24 @@ class Gd
      */
     public function colorMatch($image2)
     {
-        return imagecolormatch($this->_resource, $image2);
+        return imagecolormatch($this->resource, $image2);
     }
 
     /**
      * 取得指定颜色的索引值或有可能得到的最接近的替代值
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @return int
      */
     public function colorResolve($red, $green, $blue)
     {
-        return imagecolorresolve($this->_resource, $red, $green, $blue);
+        return imagecolorresolve($this->resource, $red, $green, $blue);
     }
 
     /**
      * 取得指定颜色 + alpha 的索引值或有可能得到的最接近的替代值
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
@@ -462,20 +463,20 @@ class Gd
      */
     public function colorResolveAlpha($red, $green, $blue, $alpha)
     {
-        return imagecolorresolvealpha($this->_resource, $red, $green, $blue, $alpha);
+        return imagecolorresolvealpha($this->resource, $red, $green, $blue, $alpha);
     }
 
     /**
      * 给指定调色板索引设定颜色
      * @param int $index 索引
-     * @param int $red  RGB成分[红]
+     * @param int $red RGB成分[红]
      * @param int $green RGB成分[绿]
      * @param int $blue RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
      */
     public function colorSet($index, $red, $green, $blue, $alpha = 0)
     {
-        imagecolorset($this->_resource, $index, $red, $green, $blue, $alpha);
+        imagecolorset($this->resource, $index, $red, $green, $blue, $alpha);
     }
 
     /**
@@ -485,7 +486,7 @@ class Gd
      */
     public function colorsForIndex($index)
     {
-        return imagecolorsforindex($this->_resource, $index);
+        return imagecolorsforindex($this->resource, $index);
     }
 
     /**
@@ -494,7 +495,7 @@ class Gd
      */
     public function colorStotal()
     {
-        return imagecolorstotal($this->_resource);
+        return imagecolorstotal($this->resource);
     }
 
     /**
@@ -504,7 +505,7 @@ class Gd
      */
     public function colorTransparent($color = null)
     {
-        return imagecolortransparent($this->_resource, $color);
+        return imagecolortransparent($this->resource, $color);
     }
 
     /**
@@ -516,7 +517,7 @@ class Gd
      */
     public function convolution($matrix, $div, $offset)
     {
-        return imageconvolution($this->_resource, $matrix, $div, $offset);
+        return imageconvolution($this->resource, $matrix, $div, $offset);
     }
 
     /**
@@ -532,7 +533,7 @@ class Gd
      */
     public function copy($dst_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h)
     {
-        return imagecopy($dst_im, $this->_resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
+        return imagecopy($dst_im, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
     }
 
     /**
@@ -549,7 +550,7 @@ class Gd
      */
     public function copyMerge($dst_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
     {
-        return imagecopymerge($dst_im, $this->_resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
+        return imagecopymerge($dst_im, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
     }
 
     /**
@@ -566,7 +567,7 @@ class Gd
      */
     public function copyMergeGray($dst_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
     {
-        return imagecopymergegray($dst_im, $this->_resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
+        return imagecopymergegray($dst_im, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
     }
 
     /**
@@ -584,7 +585,7 @@ class Gd
      */
     public function copyResampled($dst_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
     {
-        return imagecopyresampled($dst_image, $this->_resource, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+        return imagecopyresampled($dst_image, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
     }
 
     /**
@@ -602,7 +603,7 @@ class Gd
      */
     public function copyResized($dst_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
     {
-        return imagecopyresized($dst_image, $this->_resource, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+        return imagecopyresized($dst_image, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
     }
 
     /**
@@ -630,7 +631,7 @@ class Gd
      * @param array $options 其他选项，目前仅对gd2part有效
      * @return resource 失败时返回false
      */
-    public function createFrom($filename, $from, array $options =[])
+    public function createFrom($filename, $from, array $options = [])
     {
         switch (strtolower($from)) {
             case 'bmp':
@@ -687,7 +688,7 @@ class Gd
      */
     public function crop(array $rect)
     {
-        return imagecrop($this->_resource, $rect);
+        return imagecrop($this->resource, $rect);
     }
 
     /**
@@ -699,22 +700,22 @@ class Gd
      */
     public function cropAuto($mode = -1, $threshold = 0.5, $color = -1)
     {
-        return imagecropauto($this->_resource, $mode, $threshold, $color);
+        return imagecropauto($this->resource, $mode, $threshold, $color);
     }
 
     /**
      * 画一虚线
-     * @deprecated 反对使用本函数。应该用 imagesetstyle() 和 imageline() 的组合替代之
      * @param int $x1 开始坐标x轴
      * @param int $y1 开始坐标y轴
      * @param int $x2 结束坐标x轴
      * @param int $y2 结束坐标y轴
      * @param int $color 颜色标识
      * @return bool
+     * @deprecated 反对使用本函数。应该用 imagesetstyle() 和 imageline() 的组合替代之
      */
     public function dashedLine($x1, $y1, $x2, $y2, $color)
     {
-        return imagedashedline($this->_resource, $x1, $y1, $x2, $y2, $color);
+        return imagedashedline($this->resource, $x1, $y1, $x2, $y2, $color);
     }
 
     /**
@@ -738,7 +739,7 @@ class Gd
      */
     public function ellipse($cx, $cy, $width, $height, $color)
     {
-        return imageellipse($this->_resource, $cx, $cy, $width, $height, $color);
+        return imageellipse($this->resource, $cx, $cy, $width, $height, $color);
     }
 
     /**
@@ -750,7 +751,7 @@ class Gd
      */
     public function fill($x, $y, $color)
     {
-        return imagefill($this->_resource, $x, $y, $color);
+        return imagefill($this->resource, $x, $y, $color);
     }
 
     /**
@@ -767,7 +768,7 @@ class Gd
      */
     public function filledArc($cx, $cy, $width, $height, $start, $end, $color, $style)
     {
-        return imagefilledarc($this->_resource, $cx, $cy, $width, $height, $start, $end, $color, $style);
+        return imagefilledarc($this->resource, $cx, $cy, $width, $height, $start, $end, $color, $style);
     }
 
     /**
@@ -781,7 +782,7 @@ class Gd
      */
     public function filledEllipse($cx, $cy, $width, $height, $color)
     {
-        return imagefilledellipse($this->_resource, $cx, $cy, $width, $height, $color);
+        return imagefilledellipse($this->resource, $cx, $cy, $width, $height, $color);
     }
 
     /**
@@ -793,7 +794,7 @@ class Gd
      */
     public function filledPolygon($points, $num_points, $color)
     {
-        return imagefilledpolygon($this->_resource, $points, $num_points, $color);
+        return imagefilledpolygon($this->resource, $points, $num_points, $color);
     }
 
     /**
@@ -807,7 +808,7 @@ class Gd
      */
     public function filledRectangle($x1, $y1, $x2, $y2, $color)
     {
-        return imagefilledrectangle($this->_resource, $x1, $y1, $x2, $y2, $color);
+        return imagefilledrectangle($this->resource, $x1, $y1, $x2, $y2, $color);
     }
 
     /**
@@ -820,7 +821,7 @@ class Gd
      */
     public function fillToBorder($x, $y, $border, $color)
     {
-        return imagefilltoborder($this->_resource, $x, $y, $border, $color);
+        return imagefilltoborder($this->resource, $x, $y, $border, $color);
     }
 
     /**
@@ -834,7 +835,7 @@ class Gd
      */
     public function filter($filtertype, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null)
     {
-        return imagefilter($this->_resource, $filtertype, $arg1, $arg2, $arg3, $arg4);
+        return imagefilter($this->resource, $filtertype, $arg1, $arg2, $arg3, $arg4);
     }
 
     /**
@@ -844,7 +845,7 @@ class Gd
      */
     public function flip($mode)
     {
-        return imageflip($this->_resource, $mode);
+        return imageflip($this->resource, $mode);
     }
 
     /**
@@ -895,7 +896,7 @@ class Gd
      */
     public function fttext($size, $angle, $x, $y, $color, $fontfile, $text, array $extrainfo = null)
     {
-        return imagefttext($this->_resource, $size, $angle, $x, $y, $color, $fontfile, $text, $extrainfo);
+        return imagefttext($this->resource, $size, $angle, $x, $y, $color, $fontfile, $text, $extrainfo);
     }
 
     /**
@@ -906,7 +907,7 @@ class Gd
      */
     public function gammaCorrect($inputgamma, $outputgamma)
     {
-        return imagegammacorrect($this->_resource, $inputgamma, $outputgamma);
+        return imagegammacorrect($this->resource, $inputgamma, $outputgamma);
     }
 
     /**
@@ -915,13 +916,14 @@ class Gd
      */
     public function getClip()
     {
-        return imagegetclip($this->_resource);
+        return imagegetclip($this->resource);
     }
 
     /**
      * 捕捉整个屏幕
-     * @notice 该方法仅在windows下有效
      * @return resource
+     * @deprecated 不建议使用
+     * @notice 该方法仅在windows下有效
      */
     public static function grabScreen()
     {
@@ -930,10 +932,11 @@ class Gd
 
     /**
      * 捕捉指定窗口
-     * @notice 该方法仅在windows下有效
      * @param int $window_handle 句柄ID
      * @param int $client_area 包括应用程序窗口的客户端区域。
      * @return resource
+     * @deprecated 不建议使用
+     * @notice 该方法仅在windows下有效
      */
     public static function grabWindow($window_handle, $client_area = 0)
     {
@@ -947,7 +950,7 @@ class Gd
      */
     public function interlace($interlace = null)
     {
-        return imageinterlace($this->_resource, $interlace);
+        return imageinterlace($this->resource, $interlace);
     }
 
     /**
@@ -956,7 +959,7 @@ class Gd
      */
     public function isTrueColor()
     {
-        return imageistruecolor($this->_resource);
+        return imageistruecolor($this->resource);
     }
 
     /**
@@ -966,7 +969,7 @@ class Gd
      */
     public function layerEffect($effect)
     {
-        return imagelayereffect($this->_resource, $effect);
+        return imagelayereffect($this->resource, $effect);
     }
 
     /**
@@ -980,7 +983,7 @@ class Gd
      */
     public function line($x1, $y1, $x2, $y2, $color)
     {
-        return imageline($this->_resource, $x1, $y1, $x2, $y2, $color);
+        return imageline($this->resource, $x1, $y1, $x2, $y2, $color);
     }
 
     /**
@@ -1002,7 +1005,7 @@ class Gd
      */
     public function openPolygon(array $points, $num_points, $color)
     {
-        return imageopenpolygon($this->_resource , $points, $num_points, $color);
+        return imageopenpolygon($this->resource, $points, $num_points, $color);
     }
 
     /**
@@ -1011,7 +1014,7 @@ class Gd
      */
     public function paletteCopy($destination)
     {
-        imagepalettecopy($destination, $this->_resource);
+        imagepalettecopy($destination, $this->resource);
     }
 
     /**
@@ -1020,7 +1023,7 @@ class Gd
      */
     public function paletteToTrueColor()
     {
-        return imagepalettetotruecolor($this->_resource);
+        return imagepalettetotruecolor($this->resource);
     }
 
     /**
@@ -1032,16 +1035,16 @@ class Gd
      */
     public function polygon(array $points, $num_points, $color)
     {
-        return imagepolygon($this->_resource, $points, $num_points, $color);
+        return imagepolygon($this->resource, $points, $num_points, $color);
     }
 
     /**
      * 给出一个使用 PostScript Type1 字体的文本方框
-     * @deprecated PHP7已移除该方法
      * @param string $text 要写入的文本
      * @param resource $font 字体标识
      * @param int $size 字体大小
      * @return array
+     * @deprecated PHP7已移除该方法
      */
     public static function psbbox($text, $font, $size)
     {
@@ -1050,10 +1053,10 @@ class Gd
 
     /**
      * 改变字体中的字符编码矢量
-     * @deprecated PHP7已移除该方法
      * @param resource $font_index 字体标识
      * @param string $encodingfile IsoLatin1.enc and IsoLatin2.enc.
      * @return bool
+     * @deprecated PHP7已移除该方法
      */
     public static function psEncodeFont($font_index, $encodingfile)
     {
@@ -1062,10 +1065,10 @@ class Gd
 
     /**
      * 扩充或精简字体
-     * @deprecated PHP7已移除该方法
      * @param resource $font_index 字体标识
      * @param float $extend 扩展的值，必须大于 0。小于1则是精简该字体
      * @return bool
+     * @deprecated PHP7已移除该方法
      */
     public static function psExtendFont($font_index, $extend)
     {
@@ -1074,9 +1077,9 @@ class Gd
 
     /**
      * 释放一个 PostScript Type 1 字体所占用的内存
-     * @deprecated PHP7已移除该方法
      * @param resource $font_index 字体标识
      * @return bool
+     * @deprecated PHP7已移除该方法
      */
     public static function psFreeFont($font_index)
     {
@@ -1085,9 +1088,9 @@ class Gd
 
     /**
      * 从文件中加载一个 PostScript Type 1 字体
-     * @deprecated PHP7已移除该方法
      * @param string $filename 字体文件路径
      * @return resource 失败时返回false
+     * @deprecated PHP7已移除该方法
      */
     public static function psLoadFont($filename)
     {
@@ -1096,10 +1099,10 @@ class Gd
 
     /**
      * 倾斜某字体
-     * @deprecated PHP7已移除该方法
      * @param resource $font_index 字体标识
      * @param float $slant 倾斜度
      * @return bool
+     * @deprecated PHP7已移除该方法
      */
     public static function psSlantFont($font_index, $slant)
     {
@@ -1108,7 +1111,6 @@ class Gd
 
     /**
      * 用 PostScript Type1 字体把文本字符串画在图像上
-     * @deprecated PHP7已移除该方法
      * @param string $text 要写入的文本
      * @param resource $font_index 字体标识
      * @param int $size 字体大小
@@ -1121,10 +1123,11 @@ class Gd
      * @param float $angle 角度
      * @param int $antialias_steps 可以控制防混色文本使用的颜色的数目
      * @return array 有4个元素，失败返回false
+     * @deprecated PHP7已移除该方法
      */
     public function psText($text, $font_index, $size, $foreground, $background, $x, $y, $space = 0, $tightness = 0, $angle = 0.0, $antialias_steps = 4)
     {
-        return imagepstext($this->_resource, $text, $font_index, $size, $foreground, $background, $x, $y, $space, $tightness, $angle, $antialias_steps);
+        return imagepstext($this->resource, $text, $font_index, $size, $foreground, $background, $x, $y, $space, $tightness, $angle, $antialias_steps);
     }
 
     /**
@@ -1138,7 +1141,7 @@ class Gd
      */
     public function rectangle($x1, $y1, $x2, $y2, $color)
     {
-        return imagerectangle($this->_resource, $x1, $y1, $x2, $y2, $color);
+        return imagerectangle($this->resource, $x1, $y1, $x2, $y2, $color);
     }
 
     /**
@@ -1149,10 +1152,10 @@ class Gd
      */
     public function resolution($res_x = null, $res_y = null)
     {
-        if(is_null($res_x) && is_null($res_y)) {
-            return imageresolution($this->_resource);
+        if (is_null($res_x) && is_null($res_y)) {
+            return imageresolution($this->resource);
         }
-        return imageresolution($this->_resource, $res_x, $res_y);
+        return imageresolution($this->resource, $res_x, $res_y);
     }
 
     /**
@@ -1164,9 +1167,9 @@ class Gd
      */
     public function rotate($angle, $bgd_color, $ignore_transparent = 0)
     {
-        $resource = imagerotate($this->_resource, $angle, $bgd_color, $ignore_transparent);
+        $resource = imagerotate($this->resource, $angle, $bgd_color, $ignore_transparent);
 
-        $this->_resource = $resource;
+        $this->resource = $resource;
         return $resource;
     }
 
@@ -1177,7 +1180,7 @@ class Gd
      */
     public function saveAlpha($saveflag)
     {
-        return imagesavealpha($this->_resource, $saveflag);
+        return imagesavealpha($this->resource, $saveflag);
     }
 
     /**
@@ -1189,9 +1192,9 @@ class Gd
      */
     public function scale($new_width, $new_height = -1, $mode = 3)
     {
-        $resource = imagescale($this->_resource, $new_width, $new_height, $mode);
+        $resource = imagescale($this->resource, $new_width, $new_height, $mode);
 
-        $this->_resource = $resource;
+        $this->resource = $resource;
         return $resource;
     }
 
@@ -1202,7 +1205,7 @@ class Gd
      */
     public function setBrush($brush)
     {
-        return imagesetbrush($this->_resource, $brush);
+        return imagesetbrush($this->resource, $brush);
     }
 
     /**
@@ -1215,7 +1218,7 @@ class Gd
      */
     public function setClip($x1, $y1, $x2, $y2)
     {
-        return imagesetclip($this->_resource, $x1, $y1, $x2, $y2);
+        return imagesetclip($this->resource, $x1, $y1, $x2, $y2);
     }
 
     /**
@@ -1225,7 +1228,7 @@ class Gd
      */
     public function setInterpolation($method = 3)
     {
-        return imagesetinterpolation($this->_resource, $method);
+        return imagesetinterpolation($this->resource, $method);
     }
 
     /**
@@ -1237,7 +1240,7 @@ class Gd
      */
     public function setPixel($x, $y, $color)
     {
-        return imagesetpixel($this->_resource, $x, $y, $color);
+        return imagesetpixel($this->resource, $x, $y, $color);
     }
 
     /**
@@ -1247,7 +1250,7 @@ class Gd
      */
     public function setStyle(array $style)
     {
-        return imagesetstyle($this->_resource, $style);
+        return imagesetstyle($this->resource, $style);
     }
 
     /**
@@ -1257,7 +1260,7 @@ class Gd
      */
     public function setThickness($thickness)
     {
-        return imagesetthickness($this->_resource, $thickness);
+        return imagesetthickness($this->resource, $thickness);
     }
 
     /**
@@ -1267,7 +1270,7 @@ class Gd
      */
     public function setTile($tile)
     {
-        return imagesettile($this->_resource, $tile);
+        return imagesettile($this->resource, $tile);
     }
 
     /**
@@ -1281,7 +1284,7 @@ class Gd
      */
     public function stringHorizontal($font, $x, $y, $string, $color)
     {
-        return imagestring($this->_resource, $font, $x, $y, $string, $color);
+        return imagestring($this->resource, $font, $x, $y, $string, $color);
     }
 
     /**
@@ -1295,7 +1298,7 @@ class Gd
      */
     public function stringUp($font, $x, $y, $string, $color)
     {
-        return imagestringup($this->_resource, $font, $x, $y, $string, $color);
+        return imagestringup($this->resource, $font, $x, $y, $string, $color);
     }
 
     /**
@@ -1304,7 +1307,7 @@ class Gd
      */
     public function sx()
     {
-        return imagesx($this->_resource);
+        return imagesx($this->resource);
     }
 
     /**
@@ -1313,7 +1316,7 @@ class Gd
      */
     public function sy()
     {
-        return imagesy($this->_resource);
+        return imagesy($this->resource);
     }
 
     /**
@@ -1324,7 +1327,7 @@ class Gd
      */
     public function trueColorToPalette($dither, $ncolors)
     {
-        return imagetruecolortopalette($this->_resource, $dither, $ncolors);
+        return imagetruecolortopalette($this->resource, $dither, $ncolors);
     }
 
     /**
@@ -1353,7 +1356,7 @@ class Gd
      */
     public function ttftext($size, $angle, $x, $y, $color, $fontfile, $text)
     {
-        return imagettftext($this->_resource, $size, $angle, $x, $y, $color, $fontfile, $text);
+        return imagettftext($this->resource, $size, $angle, $x, $y, $color, $fontfile, $text);
     }
 
     /**
@@ -1373,7 +1376,7 @@ class Gd
      */
     public function iptcEmbed($iptcdata, $spool = 0)
     {
-        return iptcembed($iptcdata, $this->_file, $spool);
+        return iptcembed($iptcdata, $this->file, $spool);
     }
 
     /**
@@ -1388,13 +1391,13 @@ class Gd
 
     /**
      * 将 JPEG 图像文件转换为 WBMP 图像文件
-     * @deprecated 7.2.0 Use imagecreatefromjpeg() and imagewbmp() instead
      * @param $jpegname
      * @param $wbmpname
      * @param $dest_height
      * @param $dest_width
      * @param $threshold
      * @return bool
+     * @deprecated 7.2.0 Use imagecreatefromjpeg() and imagewbmp() instead
      */
     public static function jpeg2Wbmp($jpegname, $wbmpname, $dest_height, $dest_width, $threshold)
     {
@@ -1403,13 +1406,13 @@ class Gd
 
     /**
      * 将 PNG 图像文件转换为 WBMP 图像文件
-     * @deprecated 7.2.0 Use imagecreatefrompng() and imagewbmp() instead
      * @param $pngname
      * @param $wbmpname
      * @param $dest_height
      * @param $dest_width
      * @param $threshold
      * @return bool
+     * @deprecated 7.2.0 Use imagecreatefrompng() and imagewbmp() instead
      */
     public static function png2Wbmp($pngname, $wbmpname, $dest_height, $dest_width, $threshold)
     {

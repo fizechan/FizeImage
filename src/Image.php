@@ -5,6 +5,7 @@ namespace fize\image;
 
 /**
  * 图片工具类
+ * @package fize\image
  */
 class Image
 {
