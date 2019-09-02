@@ -1,2 +1,2 @@
-# FizeDatetime
-A common time, date operation class library
+# FizeImage
+一个图片操作库
