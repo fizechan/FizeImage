@@ -6,6 +6,7 @@ namespace fize\image;
 
 /**
  * 图片GD底层类
+ * @notice 需要开启扩展ext-gd
  * @package fize\image
  */
 class Gd

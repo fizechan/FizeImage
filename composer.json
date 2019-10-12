@@ -1,6 +1,6 @@
 {
     "name": "fize/image",
-    "description": "A common image manipulation class library.",
+    "description": "一个图片操作库.",
     "license": "Apache-2.0",
     "authors": [
         {
@@ -11,6 +11,9 @@
     "require": {
 		"php": ">=5.4.0"
 	},
+    "require-dev": {
+        "phpunit/phpunit": "^8.0.0"
+    },
 	"autoload": {
         "psr-4": {
             "fize\\image\\": "src"

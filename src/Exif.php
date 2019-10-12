@@ -5,6 +5,7 @@ namespace fize\image;
 
 /**
  * 图像元数据操作类
+ * @notice 需要开启扩展ext-exif
  * @package fize\image
  */
 class Exif

@@ -1,13 +1,12 @@
 <?php
 
-namespace app\controller;
-
 use fize\image\Gd;
+use PHPUnit\Framework\TestCase;
 
 /**
  * GD库类
  */
-class ControllerFizeImageGd
+class GdTest extends TestCase
 {
 
     /**
