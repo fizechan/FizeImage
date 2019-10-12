@@ -3,80 +3,77 @@
 use fize\image\Gd;
 use PHPUnit\Framework\TestCase;
 
-/**
- * GD库类
- */
+
 class GdTest extends TestCase
 {
 
-    /**
-	 * 测试1
-	 */
-	public function actionInfo()
+    public function testInfo()
     {
         $info = Gd::info();
         var_dump($info);
-	}
+        self::assertIsArray($info);
+    }
 
-    public function actionGetSize()
+    public function testGetSize()
     {
-        $gd = new Gd(APP_ROOT . '/../static/test001.png');
+        $gd = new Gd(__DIR__ . '/data/image1.jpg');
         $size = $gd->getSize();
         var_dump($size);
+        self::assertIsArray($size);
     }
 
-    public function actionGetSizeFromString()
+    public function testGetSizeFromString()
     {
-        $img = APP_ROOT . '/../static/test001.png';
-        $data       = file_get_contents($img);
+        $img = __DIR__ . '/data/image1.jpg';
+        $data = file_get_contents($img);
         $size_info2 = Gd::getSizeFromString($data);
         var_dump($size_info2);
+        self::assertIsArray($size_info2);
     }
 
-    public function actionTypeToExtension()
+    public function testTypeToExtension()
     {
         $ext = Gd::typeToExtension(IMAGETYPE_PNG);
         echo $ext;
+        self::assertIsString($ext);
     }
 
-    public function actionTypeToMimeType()
+    public function testTypeToMimeType()
     {
         $mime = Gd::typeToMimeType(IMAGETYPE_PNG);
         echo $mime;
+        self::assertIsString($mime);
     }
 
-    public function actionOutput()
+    public function testOutput()
     {
-        $gd = new Gd(APP_ROOT . '/../static/test001.png', 'png');
-        $gd->output('wbmp');
+        $gd = new Gd(__DIR__ . '/data/image1.jpg', 'jpeg');
+        $gd->output('wbmp', __DIR__ . '/output/image1.wbmp');
+        self::assertFileExists(__DIR__ . '/output/image1.wbmp');
     }
 
-    public function actionOutput1()
+    public function testAffine()
     {
-        echo "<img src='index.php?c=FizeImageGd&a=Output'/>";
-    }
-
-    public function actionOutput2()
-    {
-        $gd = new Gd(APP_ROOT . '/../static/test001.png', 'png');
-        $gd->output();
-    }
-
-    public function actionAffine()
-    {
-        $gd = new Gd(APP_ROOT . '/../static/test001.png', 'png');
-        $affine = [ 1, 1, 1, 1, 1, 1 ];
+        $gd = new Gd(__DIR__ . '/data/image1.jpg', 'jpeg');
+        $affine = [1, 0, 0, 1, 0, 0];
         $gd->affine($affine);
-        $gd->output();
+        $gd->output('jpeg', __DIR__ . '/output/image1.jpg');
+        self::assertFileExists(__DIR__ . '/output/image1.jpg');
     }
 
-    public function actionArc()
+    public function testArc()
     {
-        $img = new Gd();
+        $options = [
+            'width'     => 300,
+            'height'    => 400,
+            'truecolor' => true
+        ];
+        $img = new Gd(null, null, $options);
         $img->create(200, 200);
         $white = $img->colorAllocate(255, 255, 255);
         //$black = $img->colorAllocate( 0, 0, 0);
         $img->arc(100, 100, 150, 150, 0, 360, $white);
-        $img->output('png');
+        $img->output('png', __DIR__ . '/output/image1.png');
+        self::assertFileExists(__DIR__ . '/output/image1.png');
     }
 }

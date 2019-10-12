@@ -234,7 +234,11 @@ class Gd
      */
     public function affine(array $affine, array $clip = null)
     {
-        $resource = imageaffine($this->resource, $affine, $clip);
+        if($clip) {
+            $resource = imageaffine($this->resource, $affine, $clip);
+        } else {
+            $resource = imageaffine($this->resource, $affine);
+        }
         $this->resource = $resource;
         return $resource;
     }
