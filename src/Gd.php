@@ -31,6 +31,9 @@ class Gd
     public function __construct($filename = null, $from = null, array $options = [])
     {
         $this->file = $filename;
+        if($filename && is_null($from)) {
+            $from = $this->getType();
+        }
         if ($from) {
             $this->resource = $this->createFrom($filename, $from, $options);
         } else {
@@ -166,8 +169,9 @@ class Gd
                     imagegif($this->resource);
                 }
                 break;
+            case 'jpg':
             case 'jpeg':
-                $quality = isset($options['quality']) ? $options['quality'] : null;
+                $quality = isset($options['quality']) ? $options['quality'] : -1;
                 if ($filename) {
                     return imagejpeg($this->resource, $filename, $quality);
                 } else {
@@ -528,7 +532,7 @@ class Gd
 
     /**
      * 拷贝图像的一部分
-     * @param resource $dst_im 接收拷贝图像的资源对象
+     * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
      * @param int $dst_x 目标开始坐标x轴
      * @param int $dst_y 目标开始坐标y轴
      * @param int $src_x 拷贝开始坐标x轴
@@ -537,14 +541,17 @@ class Gd
      * @param int $src_h 拷贝高度
      * @return bool 成功时返回 TRUE， 或者在失败时返回 FALSE。
      */
-    public function copy($dst_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h)
+    public function copy($src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h)
     {
-        return imagecopy($dst_im, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
+        if(is_string($src_im)) {
+            $src_im = $this->createFrom($src_im);
+        }
+        return imagecopy($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
     }
 
     /**
      * 拷贝并合并图像的一部分
-     * @param resource $dst_im 接收拷贝图像的资源对象
+     * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
      * @param int $dst_x 目标开始坐标x轴
      * @param int $dst_y 目标开始坐标y轴
      * @param int $src_x 拷贝开始坐标x轴
@@ -554,14 +561,17 @@ class Gd
      * @param int $pct 合并程度，0-100
      * @return bool
      */
-    public function copyMerge($dst_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
+    public function copyMerge($src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
     {
-        return imagecopymerge($dst_im, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
+        if(is_string($src_im)) {
+            $src_im = $this->createFrom($src_im);
+        }
+        return imagecopymerge($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
     }
 
     /**
      * 用灰度拷贝并合并图像的一部分
-     * @param resource $dst_im 接收拷贝图像的资源对象
+     * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
      * @param int $dst_x 目标开始坐标x轴
      * @param int $dst_y 目标开始坐标y轴
      * @param int $src_x 拷贝开始坐标x轴
@@ -571,14 +581,17 @@ class Gd
      * @param int $pct 合并程度，0-100
      * @return bool
      */
-    public function copyMergeGray($dst_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
+    public function copyMergeGray($src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
     {
-        return imagecopymergegray($dst_im, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
+        if(is_string($src_im)) {
+            $src_im = $this->createFrom($src_im);
+        }
+        return imagecopymergegray($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
     }
 
     /**
      * 重采样拷贝部分图像并调整大小
-     * @param resource $dst_image 接收拷贝图像的资源对象
+     * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
      * @param int $dst_x 目标开始坐标x轴
      * @param int $dst_y 目标开始坐标y轴
      * @param int $src_x 拷贝开始坐标x轴
@@ -589,14 +602,17 @@ class Gd
      * @param int $src_h 源高度
      * @return bool
      */
-    public function copyResampled($dst_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
+    public function copyResampled($src_im, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
     {
-        return imagecopyresampled($dst_image, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+        if(is_string($src_im)) {
+            $src_im = $this->createFrom($src_im);
+        }
+        return imagecopyresampled($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
     }
 
     /**
      * 拷贝部分图像并调整大小
-     * @param resource $dst_image 接收拷贝图像的资源对象
+     * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
      * @param int $dst_x 目标开始坐标x轴
      * @param int $dst_y 目标开始坐标y轴
      * @param int $src_x 拷贝开始坐标x轴
@@ -607,9 +623,12 @@ class Gd
      * @param int $src_h 源高度
      * @return bool
      */
-    public function copyResized($dst_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
+    public function copyResized($src_im, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
     {
-        return imagecopyresized($dst_image, $this->resource, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+        if(is_string($src_im)) {
+            $src_im = $this->createFrom($src_im);
+        }
+        return imagecopyresized($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
     }
 
     /**
@@ -633,12 +652,18 @@ class Gd
     /**
      * 从指定资源创建
      * @param string $filename 文件路径
-     * @param string $from 指定资源
+     * @param string $from 指定资源类型，不指定则自动检测
      * @param array $options 其他选项，目前仅对gd2part有效
      * @return resource 失败时返回false
      */
-    public function createFrom($filename, $from, array $options = [])
+    public function createFrom($filename, $from = null, array $options = [])
     {
+        if(is_null($from)) {
+            $org_filename = $this->file;
+            $this->file = $filename;
+            $from = $this->getType();
+            $this->file = $org_filename;
+        }
         switch (strtolower($from)) {
             case 'bmp':
                 $resource = imagecreatefrombmp($filename);
@@ -659,6 +684,7 @@ class Gd
             case 'gif' :
                 $resource = imagecreatefromgif($filename);
                 break;
+            case 'jpg':
             case 'jpeg' :
                 $resource = imagecreatefromjpeg($filename);
                 break;
@@ -694,7 +720,9 @@ class Gd
      */
     public function crop(array $rect)
     {
-        return imagecrop($this->resource, $rect);
+        $resource = imagecrop($this->resource, $rect);
+        $this->resource = $resource;
+        return $resource;
     }
 
     /**
@@ -706,7 +734,9 @@ class Gd
      */
     public function cropAuto($mode = -1, $threshold = 0.5, $color = -1)
     {
-        return imagecropauto($this->resource, $mode, $threshold, $color);
+        $resource = imagecropauto($this->resource, $mode, $threshold, $color);
+        $this->resource = $resource;
+        return $resource;
     }
 
     /**
@@ -1174,7 +1204,6 @@ class Gd
     public function rotate($angle, $bgd_color, $ignore_transparent = 0)
     {
         $resource = imagerotate($this->resource, $angle, $bgd_color, $ignore_transparent);
-
         $this->resource = $resource;
         return $resource;
     }
@@ -1199,7 +1228,6 @@ class Gd
     public function scale($new_width, $new_height = -1, $mode = 3)
     {
         $resource = imagescale($this->resource, $new_width, $new_height, $mode);
-
         $this->resource = $resource;
         return $resource;
     }
