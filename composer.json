@@ -1,6 +1,6 @@
 {
     "name": "fize/image",
-    "description": "一个图片操作库.",
+    "description": "图片操作类库",
     "license": "Apache-2.0",
     "authors": [
         {
