@@ -6,7 +6,6 @@ namespace fize\image;
 /**
  * 图像元数据操作类
  * @notice 需要开启扩展ext-exif
- * @package fize\image
  */
 class Exif
 {
@@ -40,7 +39,7 @@ class Exif
      * 从 JPEG 或 TIFF 文件中读取 EXIF 头信息
      * @param string $sections FILE|COMPUTED|ANY_TAG|IFD0|THUMBNAIL|COMMENT|EXIF
      * @param bool $arrays 指定了是否每个区段都成为一个数组
-     * @param bool $thumbnail 当设定为 TRUE 时，读取缩略图本身。否则只读取标记数据。
+     * @param bool $thumbnail 是否读取缩略图本身。否则只读取标记数据。
      * @return array 如果没有可供返回的数据将返回 FALSE
      */
     public function readData($sections = null, $arrays = false, $thumbnail = false)

@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpComposerExtensionStubsInspection */
 
 namespace fize\image;
 
@@ -7,7 +6,6 @@ namespace fize\image;
 /**
  * 图片GD底层类
  * @notice 需要开启扩展ext-gd
- * @package fize\image
  */
 class Gd
 {
@@ -24,9 +22,12 @@ class Gd
 
     /**
      * 初始化
-     * @param string $filename 指定图片路径，默认为null表示不指定
+     *
+     * 参数 `$options` :
+     *   $filename为null时，该参数必须指定
+     * @param string $filename 指定图片路径，为null表示不指定
      * @param string $from 从指定资源创建
-     * @param array $options 额外选项，$filename为null时，该参数必须指定
+     * @param array $options 额外选项
      */
     public function __construct($filename = null, $from = null, array $options = [])
     {
@@ -105,7 +106,7 @@ class Gd
     /**
      * 取得图像类型的文件后缀
      * @param int $imagetype IMAGETYPE_XXX 系列常量之一。
-     * @param bool $include_dot 是否在后缀名前加一个点。默认false 。
+     * @param bool $include_dot 是否在后缀名前加一个点。
      * @return string
      */
     public static function typeToExtension($imagetype, $include_dot = false)
@@ -232,8 +233,11 @@ class Gd
 
     /**
      * 仿射变换
+     *
+     * 参数 `$clip` :
+     *   其中键为 "x"，"y"，"width" 和 "height"
      * @param array $affine [ a0, b0, a1, b1, a2, b2 ]
-     * @param array $clip 剪切区域,其中键为 "x"，"y"，"width" 和 "height"
+     * @param array $clip 剪切区域
      * @return resource 失败时返回false
      */
     public function affine(array $affine, array $clip = null)
@@ -291,12 +295,17 @@ class Gd
 
     /**
      * 画椭圆弧
+     *
+     * 参数 `$start` :
+     *   0°位于三点钟位置，以顺时针方向绘画。
+     * 参数 `$end` :
+     *   0°位于三点钟位置，以顺时针方向绘画。
      * @param int $cx 中心点x轴坐标
      * @param int $cy 中心点y轴坐标
      * @param int $width 椭圆宽度
      * @param int $height 椭圆高度
-     * @param int $start 起点角度，0°位于三点钟位置，以顺时针方向绘画。
-     * @param int $end 结束点角度，0°位于三点钟位置，以顺时针方向绘画。
+     * @param int $start 起点角度
+     * @param int $end 结束点角度
      * @param int $color 配色识符
      * @return bool
      */
@@ -715,7 +724,10 @@ class Gd
 
     /**
      * 裁剪图像
-     * @param array $rect [x, y, width, height]
+     *
+     * 参数 `$rect` :
+     *   [x, y, width, height]
+     * @param array $rect 裁剪区域
      * @return resource 失败时返回false
      */
     public function crop(array $rect)
@@ -823,7 +835,10 @@ class Gd
 
     /**
      * 画一多边形并填充
-     * @param array $points 按顺序包含有多边形各顶点的 x 和 y 坐标的数组
+     *
+     * 参数 `$points` :
+     *   按顺序包含有多边形各顶点的 x 和 y 坐标的数组
+     * @param array $points 顶点数组
      * @param int $num_points 顶点的总数，必须大于3
      * @param int $color 颜色标识
      * @return bool

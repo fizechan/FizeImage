@@ -5,16 +5,18 @@ namespace fize\image;
 
 /**
  * 图片工具类
- * @package fize\image
  */
 class Image
 {
 
     /**
      * 仿射变换
+     *
+     * 参数 `$clip` :
+     *   其中键为 "x"，"y"，"width" 和 "height"
      * @param string $file_name 图像文件路径
      * @param array $affine [ a0, b0, a1, b1, a2, b2 ]
-     * @param array $clip 剪切区域,其中键为 "x"，"y"，"width" 和 "height"
+     * @param array $clip 剪切区域
      * @param string $to 保存路径，不指定时则覆盖原图片
      * @return bool 成功时返回true，失败时返回false
      */
@@ -30,8 +32,11 @@ class Image
 
     /**
      * 裁剪图像
+     *
+     * 参数 `$rect` :
+     *   其中键为 "x"，"y"，"width" 和 "height"
      * @param string $file_name 图像文件路径
-     * @param array $rect [x, y, width, height]
+     * @param array $rect 裁剪区域
      * @param string $to 保存路径，不指定时则覆盖原图片
      * @return bool 成功时返回true，失败时返回false
      */
@@ -50,7 +55,7 @@ class Image
      * @param string $file_name 图像文件路径
      * @param float $angle 角度
      * @param int $bgd_color 指定旋转后未覆盖区域的颜色
-     * @param int $ignore_transparent 如果被设为非零值，则透明色会被忽略（否则会被保留）。
+     * @param int $ignore_transparent 如果被设为非零值，则透明色会被忽略。
      * @param string $to 保存路径，不指定时则覆盖原图片
      * @return bool 成功时返回true，失败时返回false
      */
@@ -109,9 +114,12 @@ class Image
 
     /**
      * 添加图片水印
+     *
+     * 参数 `$coord` :
+     *   支持键名[left、right、top、bottom]
      * @param string $file_name 图像文件路径
      * @param string $source 水印文件路径
-     * @param array $coord 水印坐标，支持键名[left、right、top、bottom]
+     * @param array $coord 水印坐标
      * @param int $alpha 透明度
      * @param string $to 保存路径，不指定时则覆盖原图片
      * @return bool
@@ -154,8 +162,11 @@ class Image
 
     /**
      * 添加文字水印
+     *
+     * 参数 `$coord` :
+     *   支持键名[left、right、top、bottom]
      * @param string $file_name 图像文件路径
-     * @param array $coord 水印坐标，支持键名[left、right、top、bottom]
+     * @param array $coord 水印坐标
      * @param string $text 水印文字
      * @param string $font 字体文件路径
      * @param int $size 字体大小
