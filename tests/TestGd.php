@@ -4,7 +4,7 @@ use fize\image\Gd;
 use PHPUnit\Framework\TestCase;
 
 
-class GdTest extends TestCase
+class TestGd extends TestCase
 {
 
     public function testInfo()

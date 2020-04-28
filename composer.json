@@ -1,26 +1,28 @@
 {
-    "name": "fize/image",
-    "description": "图片操作类库",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "FizeChan",
-            "email": "chenfengzhan@qq.com"
-        }
-    ],
-    "require": {
-		"php": ">=5.4.0",
-        "ext-gd": "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.0.0"
-    },
-    "suggest": {
-        "ext-exif": "*"
-    },
-	"autoload": {
-        "psr-4": {
-            "fize\\image\\": "src"
-        }
+  "name": "fize/image",
+  "description": "图片操作类库",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "FizeChan",
+      "email": "chenfengzhan@qq.com"
     }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "ext-gd": "*"
+  },
+  "require-dev": {
+    "ext-exif": "*",
+    "phpunit/phpunit": "~9.1.0"
+  },
+  "suggest": {
+    "php": ">=7.2.0",
+    "ext-exif": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "fize\\image\\": "src"
+    }
+  }
 }

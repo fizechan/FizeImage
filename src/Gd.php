@@ -2,7 +2,6 @@
 
 namespace fize\image;
 
-
 /**
  * 图片GD底层类
  * @notice 需要开启扩展ext-gd
@@ -26,13 +25,13 @@ class Gd
      * 参数 `$options` :
      *   $filename为null时，该参数必须指定
      * @param string $filename 指定图片路径，为null表示不指定
-     * @param string $from 从指定资源创建
-     * @param array $options 额外选项
+     * @param string $from     从指定资源创建
+     * @param array  $options  额外选项
      */
     public function __construct($filename = null, $from = null, array $options = [])
     {
         $this->file = $filename;
-        if($filename && is_null($from)) {
+        if ($filename && is_null($from)) {
             $from = $this->getType();
         }
         if ($from) {
@@ -95,7 +94,7 @@ class Gd
     /**
      * 从字符串中获取图像尺寸信息
      * @param string $imagedata
-     * @param array $imageinfo
+     * @param array  $imageinfo
      * @return array
      */
     public static function getSizeFromString($imagedata, array &$imageinfo = null)
@@ -105,7 +104,7 @@ class Gd
 
     /**
      * 取得图像类型的文件后缀
-     * @param int $imagetype IMAGETYPE_XXX 系列常量之一。
+     * @param int  $imagetype   IMAGETYPE_XXX 系列常量之一。
      * @param bool $include_dot 是否在后缀名前加一个点。
      * @return string
      */
@@ -126,9 +125,9 @@ class Gd
 
     /**
      * 输出图像
-     * @param string $type 输出类型
+     * @param string $type     输出类型
      * @param string $filename 指定输出文件路径，不指定则直接在浏览器显示
-     * @param array $options 可选的参数
+     * @param array  $options  可选的参数
      * @return bool 如果是直接显示图像则返回null
      */
     public function output($type = null, $filename = null, array $options = [])
@@ -237,12 +236,12 @@ class Gd
      * 参数 `$clip` :
      *   其中键为 "x"，"y"，"width" 和 "height"
      * @param array $affine [ a0, b0, a1, b1, a2, b2 ]
-     * @param array $clip 剪切区域
+     * @param array $clip   剪切区域
      * @return resource 失败时返回false
      */
     public function affine(array $affine, array $clip = null)
     {
-        if($clip) {
+        if ($clip) {
             $resource = imageaffine($this->resource, $affine, $clip);
         } else {
             $resource = imageaffine($this->resource, $affine);
@@ -264,7 +263,7 @@ class Gd
 
     /**
      * 得到一个仿射变换矩阵
-     * @param int $type 常量IMG_AFFINE_*
+     * @param int   $type    常量IMG_AFFINE_*
      * @param mixed $options 其他选项
      * @return array 失败返回false
      */
@@ -300,13 +299,13 @@ class Gd
      *   0°位于三点钟位置，以顺时针方向绘画。
      * 参数 `$end` :
      *   0°位于三点钟位置，以顺时针方向绘画。
-     * @param int $cx 中心点x轴坐标
-     * @param int $cy 中心点y轴坐标
-     * @param int $width 椭圆宽度
+     * @param int $cx     中心点x轴坐标
+     * @param int $cy     中心点y轴坐标
+     * @param int $width  椭圆宽度
      * @param int $height 椭圆高度
-     * @param int $start 起点角度
-     * @param int $end 结束点角度
-     * @param int $color 配色识符
+     * @param int $start  起点角度
+     * @param int $end    结束点角度
+     * @param int $color  配色识符
      * @return bool
      */
     public function arc($cx, $cy, $width, $height, $start, $end, $color)
@@ -316,11 +315,11 @@ class Gd
 
     /**
      * 水平地画一个字符
-     * @param int $font 更大的数字对应于更大的字体
-     * @param int $x 左上角x轴坐标
-     * @param int $y 左上角y轴坐标
-     * @param string $c 字符串
-     * @param int $color 配色识符
+     * @param int    $font  更大的数字对应于更大的字体
+     * @param int    $x     左上角x轴坐标
+     * @param int    $y     左上角y轴坐标
+     * @param string $c     字符串
+     * @param int    $color 配色识符
      * @return bool
      */
     public function char($font, $x, $y, $c, $color)
@@ -330,11 +329,11 @@ class Gd
 
     /**
      * 垂直地画一个字符
-     * @param int $font 更大的数字对应于更大的字体
-     * @param int $x 左上角x轴坐标
-     * @param int $y 左上角y轴坐标
-     * @param string $c 字符串
-     * @param int $color 配色识符
+     * @param int    $font  更大的数字对应于更大的字体
+     * @param int    $x     左上角x轴坐标
+     * @param int    $y     左上角y轴坐标
+     * @param string $c     字符串
+     * @param int    $color 配色识符
      * @return bool
      */
     public function charUp($font, $x, $y, $c, $color)
@@ -344,9 +343,9 @@ class Gd
 
     /**
      * 分配颜色
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @return int 成功返回配色识符，失败返回false
      */
     public function colorAllocate($red, $green, $blue)
@@ -356,9 +355,9 @@ class Gd
 
     /**
      * 分配带透明度颜色
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
      * @return int 成功返回配色识符，失败返回false
      */
@@ -380,9 +379,9 @@ class Gd
 
     /**
      * 取得与指定的颜色最接近的颜色索引
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @return int
      */
     public function colorClosest($red, $green, $blue)
@@ -392,9 +391,9 @@ class Gd
 
     /**
      * 取得与指定的颜色加透明度最接近的颜色索引
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
      * @return int
      */
@@ -405,9 +404,9 @@ class Gd
 
     /**
      * 取得与给定颜色最接近的色度的黑白色的索引
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @return int
      */
     public function colorClosestHwb($red, $green, $blue)
@@ -427,9 +426,9 @@ class Gd
 
     /**
      * 取得指定颜色的索引值
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @return int 如果颜色不在图像的调色板中，返回-1
      */
     public function colorExact($red, $green, $blue)
@@ -439,9 +438,9 @@ class Gd
 
     /**
      * 取得指定的颜色加透明度的索引值
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
      * @return int 如果颜色不在图像的调色板中，返回-1
      */
@@ -462,9 +461,9 @@ class Gd
 
     /**
      * 取得指定颜色的索引值或有可能得到的最接近的替代值
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @return int
      */
     public function colorResolve($red, $green, $blue)
@@ -474,9 +473,9 @@ class Gd
 
     /**
      * 取得指定颜色 + alpha 的索引值或有可能得到的最接近的替代值
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
      * @return int
      */
@@ -488,9 +487,9 @@ class Gd
     /**
      * 给指定调色板索引设定颜色
      * @param int $index 索引
-     * @param int $red RGB成分[红]
+     * @param int $red   RGB成分[红]
      * @param int $green RGB成分[绿]
-     * @param int $blue RGB成分[蓝]
+     * @param int $blue  RGB成分[蓝]
      * @param int $alpha 透明度[0 ~ 127]
      */
     public function colorSet($index, $red, $green, $blue, $alpha = 0)
@@ -530,7 +529,7 @@ class Gd
     /**
      * 用系数 div 和 offset 申请一个 3x3 的卷积矩阵
      * @param array $matrix 矩阵
-     * @param float $div 卷积结果的除数
+     * @param float $div    卷积结果的除数
      * @param float $offset 颜色偏移
      * @return bool 成功时返回 TRUE， 或者在失败时返回 FALSE。
      */
@@ -542,17 +541,17 @@ class Gd
     /**
      * 拷贝图像的一部分
      * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
-     * @param int $dst_x 目标开始坐标x轴
-     * @param int $dst_y 目标开始坐标y轴
-     * @param int $src_x 拷贝开始坐标x轴
-     * @param int $src_y 拷贝开始坐标y轴
-     * @param int $src_w 拷贝宽度
-     * @param int $src_h 拷贝高度
+     * @param int   $dst_x  目标开始坐标x轴
+     * @param int   $dst_y  目标开始坐标y轴
+     * @param int   $src_x  拷贝开始坐标x轴
+     * @param int   $src_y  拷贝开始坐标y轴
+     * @param int   $src_w  拷贝宽度
+     * @param int   $src_h  拷贝高度
      * @return bool 成功时返回 TRUE， 或者在失败时返回 FALSE。
      */
     public function copy($src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h)
     {
-        if(is_string($src_im)) {
+        if (is_string($src_im)) {
             $src_im = $this->createFrom($src_im);
         }
         return imagecopy($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
@@ -561,18 +560,18 @@ class Gd
     /**
      * 拷贝并合并图像的一部分
      * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
-     * @param int $dst_x 目标开始坐标x轴
-     * @param int $dst_y 目标开始坐标y轴
-     * @param int $src_x 拷贝开始坐标x轴
-     * @param int $src_y 拷贝开始坐标y轴
-     * @param int $src_w 拷贝宽度
-     * @param int $src_h 拷贝高度
-     * @param int $pct 合并程度，0-100
+     * @param int   $dst_x  目标开始坐标x轴
+     * @param int   $dst_y  目标开始坐标y轴
+     * @param int   $src_x  拷贝开始坐标x轴
+     * @param int   $src_y  拷贝开始坐标y轴
+     * @param int   $src_w  拷贝宽度
+     * @param int   $src_h  拷贝高度
+     * @param int   $pct    合并程度，0-100
      * @return bool
      */
     public function copyMerge($src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
     {
-        if(is_string($src_im)) {
+        if (is_string($src_im)) {
             $src_im = $this->createFrom($src_im);
         }
         return imagecopymerge($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
@@ -581,18 +580,18 @@ class Gd
     /**
      * 用灰度拷贝并合并图像的一部分
      * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
-     * @param int $dst_x 目标开始坐标x轴
-     * @param int $dst_y 目标开始坐标y轴
-     * @param int $src_x 拷贝开始坐标x轴
-     * @param int $src_y 拷贝开始坐标y轴
-     * @param int $src_w 拷贝宽度
-     * @param int $src_h 拷贝高度
-     * @param int $pct 合并程度，0-100
+     * @param int   $dst_x  目标开始坐标x轴
+     * @param int   $dst_y  目标开始坐标y轴
+     * @param int   $src_x  拷贝开始坐标x轴
+     * @param int   $src_y  拷贝开始坐标y轴
+     * @param int   $src_w  拷贝宽度
+     * @param int   $src_h  拷贝高度
+     * @param int   $pct    合并程度，0-100
      * @return bool
      */
     public function copyMergeGray($src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct)
     {
-        if(is_string($src_im)) {
+        if (is_string($src_im)) {
             $src_im = $this->createFrom($src_im);
         }
         return imagecopymergegray($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
@@ -601,19 +600,19 @@ class Gd
     /**
      * 重采样拷贝部分图像并调整大小
      * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
-     * @param int $dst_x 目标开始坐标x轴
-     * @param int $dst_y 目标开始坐标y轴
-     * @param int $src_x 拷贝开始坐标x轴
-     * @param int $src_y 拷贝开始坐标y轴
-     * @param int $dst_w 目标宽度
-     * @param int $dst_h 目标高度
-     * @param int $src_w 源宽度
-     * @param int $src_h 源高度
+     * @param int   $dst_x  目标开始坐标x轴
+     * @param int   $dst_y  目标开始坐标y轴
+     * @param int   $src_x  拷贝开始坐标x轴
+     * @param int   $src_y  拷贝开始坐标y轴
+     * @param int   $dst_w  目标宽度
+     * @param int   $dst_h  目标高度
+     * @param int   $src_w  源宽度
+     * @param int   $src_h  源高度
      * @return bool
      */
     public function copyResampled($src_im, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
     {
-        if(is_string($src_im)) {
+        if (is_string($src_im)) {
             $src_im = $this->createFrom($src_im);
         }
         return imagecopyresampled($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
@@ -622,19 +621,19 @@ class Gd
     /**
      * 拷贝部分图像并调整大小
      * @param mixed $src_im 要拷贝图像的资源对象或者图像文件路径
-     * @param int $dst_x 目标开始坐标x轴
-     * @param int $dst_y 目标开始坐标y轴
-     * @param int $src_x 拷贝开始坐标x轴
-     * @param int $src_y 拷贝开始坐标y轴
-     * @param int $dst_w 目标宽度
-     * @param int $dst_h 目标高度
-     * @param int $src_w 源宽度
-     * @param int $src_h 源高度
+     * @param int   $dst_x  目标开始坐标x轴
+     * @param int   $dst_y  目标开始坐标y轴
+     * @param int   $src_x  拷贝开始坐标x轴
+     * @param int   $src_y  拷贝开始坐标y轴
+     * @param int   $dst_w  目标宽度
+     * @param int   $dst_h  目标高度
+     * @param int   $src_w  源宽度
+     * @param int   $src_h  源高度
      * @return bool
      */
     public function copyResized($src_im, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
     {
-        if(is_string($src_im)) {
+        if (is_string($src_im)) {
             $src_im = $this->createFrom($src_im);
         }
         return imagecopyresized($this->resource, $src_im, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
@@ -642,8 +641,8 @@ class Gd
 
     /**
      * 新建一个基于调色板的图像
-     * @param int $width 宽
-     * @param int $height 高
+     * @param int  $width     宽
+     * @param int  $height    高
      * @param bool $truecolor 是否真彩色
      * @return resource 失败时返回false
      */
@@ -661,13 +660,13 @@ class Gd
     /**
      * 从指定资源创建
      * @param string $filename 文件路径
-     * @param string $from 指定资源类型，不指定则自动检测
-     * @param array $options 其他选项，目前仅对gd2part有效
+     * @param string $from     指定资源类型，不指定则自动检测
+     * @param array  $options  其他选项，目前仅对gd2part有效
      * @return resource 失败时返回false
      */
     public function createFrom($filename, $from = null, array $options = [])
     {
-        if(is_null($from)) {
+        if (is_null($from)) {
             $org_filename = $this->file;
             $this->file = $filename;
             $from = $this->getType();
@@ -739,9 +738,9 @@ class Gd
 
     /**
      * 使用其中一种可用模式自动裁剪图像
-     * @param int $mode IMG_CROP_*敞亮
+     * @param int   $mode      IMG_CROP_*敞亮
      * @param float $threshold 容忍度，以百分比为单位
-     * @param int $color 颜色标识
+     * @param int   $color     颜色标识
      * @return resource
      */
     public function cropAuto($mode = -1, $threshold = 0.5, $color = -1)
@@ -753,10 +752,10 @@ class Gd
 
     /**
      * 画一虚线
-     * @param int $x1 开始坐标x轴
-     * @param int $y1 开始坐标y轴
-     * @param int $x2 结束坐标x轴
-     * @param int $y2 结束坐标y轴
+     * @param int $x1    开始坐标x轴
+     * @param int $y1    开始坐标y轴
+     * @param int $x2    结束坐标x轴
+     * @param int $y2    结束坐标y轴
      * @param int $color 颜色标识
      * @return bool
      * @deprecated 反对使用本函数。应该用 imagesetstyle() 和 imageline() 的组合替代之
@@ -778,11 +777,11 @@ class Gd
 
     /**
      * 画一个椭圆
-     * @param int $cx 中间的 X 坐标
-     * @param int $cy 中间的 Y 坐标
-     * @param int $width 宽度
+     * @param int $cx     中间的 X 坐标
+     * @param int $cy     中间的 Y 坐标
+     * @param int $width  宽度
      * @param int $height 高度
-     * @param int $color 颜色标识
+     * @param int $color  颜色标识
      * @return bool
      */
     public function ellipse($cx, $cy, $width, $height, $color)
@@ -792,8 +791,8 @@ class Gd
 
     /**
      * 区域填充，即与 x, y 点颜色相同且相邻的点都会被填充
-     * @param int $x X坐标
-     * @param int $y Y坐标
+     * @param int $x     X坐标
+     * @param int $y     Y坐标
      * @param int $color 颜色标识
      * @return bool
      */
@@ -804,14 +803,14 @@ class Gd
 
     /**
      * 画一椭圆弧且填充
-     * @param int $cx 中心点x轴
-     * @param int $cy 中心点y轴
-     * @param int $width 宽度
+     * @param int $cx     中心点x轴
+     * @param int $cy     中心点y轴
+     * @param int $width  宽度
      * @param int $height 高度
-     * @param int $start 起点角度，0°为3点钟方向
-     * @param int $end 结束角度，0°为3点钟方向
-     * @param int $color 颜色标识
-     * @param int $style 类型，IMG_ARC_*常量
+     * @param int $start  起点角度，0°为3点钟方向
+     * @param int $end    结束角度，0°为3点钟方向
+     * @param int $color  颜色标识
+     * @param int $style  类型，IMG_ARC_*常量
      * @return bool
      */
     public function filledArc($cx, $cy, $width, $height, $start, $end, $color, $style)
@@ -821,11 +820,11 @@ class Gd
 
     /**
      * 画一椭圆并填充
-     * @param int $cx 中心点x轴
-     * @param int $cy 中心点y轴
-     * @param int $width 宽度
+     * @param int $cx     中心点x轴
+     * @param int $cy     中心点y轴
+     * @param int $width  宽度
      * @param int $height 高度
-     * @param int $color 颜色标识
+     * @param int $color  颜色标识
      * @return bool
      */
     public function filledEllipse($cx, $cy, $width, $height, $color)
@@ -838,9 +837,9 @@ class Gd
      *
      * 参数 `$points` :
      *   按顺序包含有多边形各顶点的 x 和 y 坐标的数组
-     * @param array $points 顶点数组
-     * @param int $num_points 顶点的总数，必须大于3
-     * @param int $color 颜色标识
+     * @param array $points     顶点数组
+     * @param int   $num_points 顶点的总数，必须大于3
+     * @param int   $color      颜色标识
      * @return bool
      */
     public function filledPolygon($points, $num_points, $color)
@@ -850,10 +849,10 @@ class Gd
 
     /**
      * 画一矩形并填充
-     * @param int $x1 左上角x轴
-     * @param int $y1 左上角y轴
-     * @param int $x2 右下角x轴
-     * @param int $y2 右下角y轴
+     * @param int $x1    左上角x轴
+     * @param int $y1    左上角y轴
+     * @param int $x2    右下角x轴
+     * @param int $y2    右下角y轴
      * @param int $color 颜色标识
      * @return bool
      */
@@ -864,10 +863,10 @@ class Gd
 
     /**
      * 区域填充到指定颜色的边界为止
-     * @param int $x 开始点x轴
-     * @param int $y 开始点y轴
+     * @param int $x      开始点x轴
+     * @param int $y      开始点y轴
      * @param int $border 边界颜色标识
-     * @param int $color 填充颜色标识
+     * @param int $color  填充颜色标识
      * @return bool
      */
     public function fillToBorder($x, $y, $border, $color)
@@ -878,10 +877,10 @@ class Gd
     /**
      * 使用过滤器
      * @param int $filtertype 常量IMG_FILTER_*
-     * @param int $arg1 可选参数1
-     * @param int $arg2 可选参数2
-     * @param int $arg3 可选参数3
-     * @param int $arg4 可选参数4
+     * @param int $arg1       可选参数1
+     * @param int $arg2       可选参数2
+     * @param int $arg3       可选参数3
+     * @param int $arg4       可选参数4
      * @return bool
      */
     public function filter($filtertype, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null)
@@ -921,11 +920,11 @@ class Gd
 
     /**
      * 给出一个使用 FreeType 2 字体的文本框
-     * @param float $size 字体的尺寸
-     * @param float $angle 使文本具有保密性的角度。
-     * @param string $fontfile 字体文件路径
-     * @param string $text 要渲染的字符串
-     * @param array $extrainfo 其他设置
+     * @param float  $size      字体的尺寸
+     * @param float  $angle     使文本具有保密性的角度。
+     * @param string $fontfile  字体文件路径
+     * @param string $text      要渲染的字符串
+     * @param array  $extrainfo 其他设置
      * @return array 数组含8个元素，失败时返回false
      */
     public static function ftbbox($size, $angle, $fontfile, $text, array $extrainfo = null)
@@ -935,14 +934,14 @@ class Gd
 
     /**
      * 使用 FreeType 2 字体将文本写入图像
-     * @param float $size 字体的尺寸
-     * @param float $angle 使文本具有保密性的角度。
-     * @param int $x 左上角x轴
-     * @param int $y 左上角y轴
-     * @param int $color 颜色标识
-     * @param string $fontfile 字体文件路径
-     * @param string $text 要渲染的字符串
-     * @param array $extrainfo 其他设置
+     * @param float  $size      字体的尺寸
+     * @param float  $angle     使文本具有保密性的角度。
+     * @param int    $x         左上角x轴
+     * @param int    $y         左上角y轴
+     * @param int    $color     颜色标识
+     * @param string $fontfile  字体文件路径
+     * @param string $text      要渲染的字符串
+     * @param array  $extrainfo 其他设置
      * @return array 数组含8个元素，失败时返回false
      */
     public function fttext($size, $angle, $x, $y, $color, $fontfile, $text, array $extrainfo = null)
@@ -952,7 +951,7 @@ class Gd
 
     /**
      * 对 GD 图像应用 gamma 修正
-     * @param float $inputgamma 输入gamma
+     * @param float $inputgamma  输入gamma
      * @param float $outputgamma 输出gamma
      * @return bool
      */
@@ -974,7 +973,7 @@ class Gd
      * 捕捉整个屏幕
      * @return resource
      * @deprecated 不建议使用
-     * @notice 该方法仅在windows下有效
+     * @notice     该方法仅在windows下有效
      */
     public static function grabScreen()
     {
@@ -984,10 +983,10 @@ class Gd
     /**
      * 捕捉指定窗口
      * @param int $window_handle 句柄ID
-     * @param int $client_area 包括应用程序窗口的客户端区域。
+     * @param int $client_area   包括应用程序窗口的客户端区域。
      * @return resource
      * @deprecated 不建议使用
-     * @notice 该方法仅在windows下有效
+     * @notice     该方法仅在windows下有效
      */
     public static function grabWindow($window_handle, $client_area = 0)
     {
@@ -1025,10 +1024,10 @@ class Gd
 
     /**
      * 画一条线段
-     * @param int $x1 起点x轴
-     * @param int $y1 起点y轴
-     * @param int $x2 终点x轴
-     * @param int $y2 终点y轴
+     * @param int $x1    起点x轴
+     * @param int $y1    起点y轴
+     * @param int $x2    终点x轴
+     * @param int $y2    终点y轴
      * @param int $color 颜色标识
      * @return bool
      */
@@ -1049,9 +1048,9 @@ class Gd
 
     /**
      * 绘制一个开放多边形
-     * @param array $points 顶点数组
-     * @param int $num_points 顶点数量
-     * @param int $color 颜色标识
+     * @param array $points     顶点数组
+     * @param int   $num_points 顶点数量
+     * @param int   $color      颜色标识
      * @return bool
      */
     public function openPolygon(array $points, $num_points, $color)
@@ -1079,9 +1078,9 @@ class Gd
 
     /**
      * 画一个多边形
-     * @param array $points 顶点数组
-     * @param int $num_points 顶点数量
-     * @param int $color 颜色标识
+     * @param array $points     顶点数组
+     * @param int   $num_points 顶点数量
+     * @param int   $color      颜色标识
      * @return bool
      */
     public function polygon(array $points, $num_points, $color)
@@ -1091,9 +1090,9 @@ class Gd
 
     /**
      * 给出一个使用 PostScript Type1 字体的文本方框
-     * @param string $text 要写入的文本
+     * @param string   $text 要写入的文本
      * @param resource $font 字体标识
-     * @param int $size 字体大小
+     * @param int      $size 字体大小
      * @return array
      * @deprecated PHP7已移除该方法
      */
@@ -1104,8 +1103,8 @@ class Gd
 
     /**
      * 改变字体中的字符编码矢量
-     * @param resource $font_index 字体标识
-     * @param string $encodingfile IsoLatin1.enc and IsoLatin2.enc.
+     * @param resource $font_index   字体标识
+     * @param string   $encodingfile IsoLatin1.enc and IsoLatin2.enc.
      * @return bool
      * @deprecated PHP7已移除该方法
      */
@@ -1117,7 +1116,7 @@ class Gd
     /**
      * 扩充或精简字体
      * @param resource $font_index 字体标识
-     * @param float $extend 扩展的值，必须大于 0。小于1则是精简该字体
+     * @param float    $extend     扩展的值，必须大于 0。小于1则是精简该字体
      * @return bool
      * @deprecated PHP7已移除该方法
      */
@@ -1151,7 +1150,7 @@ class Gd
     /**
      * 倾斜某字体
      * @param resource $font_index 字体标识
-     * @param float $slant 倾斜度
+     * @param float    $slant      倾斜度
      * @return bool
      * @deprecated PHP7已移除该方法
      */
@@ -1162,17 +1161,17 @@ class Gd
 
     /**
      * 用 PostScript Type1 字体把文本字符串画在图像上
-     * @param string $text 要写入的文本
-     * @param resource $font_index 字体标识
-     * @param int $size 字体大小
-     * @param int $foreground 写入的字体的颜色标识
-     * @param int $background 背景颜色标识
-     * @param int $x 左下角起点x轴
-     * @param int $y 左下角起点y轴
-     * @param int $space 字体间距
-     * @param int $tightness 字符间距
-     * @param float $angle 角度
-     * @param int $antialias_steps 可以控制防混色文本使用的颜色的数目
+     * @param string   $text            要写入的文本
+     * @param resource $font_index      字体标识
+     * @param int      $size            字体大小
+     * @param int      $foreground      写入的字体的颜色标识
+     * @param int      $background      背景颜色标识
+     * @param int      $x               左下角起点x轴
+     * @param int      $y               左下角起点y轴
+     * @param int      $space           字体间距
+     * @param int      $tightness       字符间距
+     * @param float    $angle           角度
+     * @param int      $antialias_steps 可以控制防混色文本使用的颜色的数目
      * @return array 有4个元素，失败返回false
      * @deprecated PHP7已移除该方法
      */
@@ -1183,10 +1182,10 @@ class Gd
 
     /**
      * 画一个矩形
-     * @param int $x1 左上角坐标x轴
-     * @param int $y1 左上角坐标y轴
-     * @param int $x2 右下角坐标x轴
-     * @param int $y2 右下角坐标y轴
+     * @param int $x1    左上角坐标x轴
+     * @param int $y1    左上角坐标y轴
+     * @param int $x2    右下角坐标x轴
+     * @param int $y2    右下角坐标y轴
      * @param int $color 颜色标识
      * @return bool
      */
@@ -1211,9 +1210,9 @@ class Gd
 
     /**
      * 用给定角度旋转图像
-     * @param float $angle 角度
-     * @param int $bgd_color 指定旋转后未覆盖区域的颜色
-     * @param int $ignore_transparent 如果被设为非零值，则透明色会被忽略（否则会被保留）。
+     * @param float $angle              角度
+     * @param int   $bgd_color          指定旋转后未覆盖区域的颜色
+     * @param int   $ignore_transparent 如果被设为非零值，则透明色会被忽略（否则会被保留）。
      * @return resource
      */
     public function rotate($angle, $bgd_color, $ignore_transparent = 0)
@@ -1235,9 +1234,9 @@ class Gd
 
     /**
      * 使用给定的新宽度和高度缩放图像
-     * @param int $new_width 新宽度
+     * @param int $new_width  新宽度
      * @param int $new_height 新高度，-1表示自动计算
-     * @param int $mode 模式
+     * @param int $mode       模式
      * @return resource
      */
     public function scale($new_width, $new_height = -1, $mode = 3)
@@ -1282,8 +1281,8 @@ class Gd
 
     /**
      * 画一个单一像素
-     * @param int $x 坐标x轴
-     * @param int $y 坐标y轴
+     * @param int $x     坐标x轴
+     * @param int $y     坐标y轴
      * @param int $color 颜色标识
      * @return bool
      */
@@ -1324,11 +1323,11 @@ class Gd
 
     /**
      * 水平地画一行字符串
-     * @param int $font 字体标识
-     * @param int $x 左上角坐标x轴
-     * @param int $y 左上角坐标y轴
+     * @param int    $font   字体标识
+     * @param int    $x      左上角坐标x轴
+     * @param int    $y      左上角坐标y轴
      * @param string $string 字符串
-     * @param int $color 颜色标识
+     * @param int    $color  颜色标识
      * @return bool
      */
     public function stringHorizontal($font, $x, $y, $string, $color)
@@ -1338,11 +1337,11 @@ class Gd
 
     /**
      * 垂直地画一行字符串
-     * @param int $font 字体标识
-     * @param int $x 左上角坐标x轴
-     * @param int $y 左上角坐标y轴
+     * @param int    $font   字体标识
+     * @param int    $x      左上角坐标x轴
+     * @param int    $y      左上角坐标y轴
      * @param string $string 字符串
-     * @param int $color 颜色标识
+     * @param int    $color  颜色标识
      * @return bool
      */
     public function stringUp($font, $x, $y, $string, $color)
@@ -1370,8 +1369,8 @@ class Gd
 
     /**
      * 将真彩色图像转换为调色板图像
-     * @param bool $dither 指明图像是否被抖动
-     * @param int $ncolors 设定调色板中被保留的颜色的最大数目
+     * @param bool $dither  指明图像是否被抖动
+     * @param int  $ncolors 设定调色板中被保留的颜色的最大数目
      * @return bool
      */
     public function trueColorToPalette($dither, $ncolors)
@@ -1381,10 +1380,10 @@ class Gd
 
     /**
      * 取得使用 TrueType 字体的文本的范围
-     * @param float $size 像素单位的字体大小
-     * @param float $angle 将被度量的角度大小
+     * @param float  $size     像素单位的字体大小
+     * @param float  $angle    将被度量的角度大小
      * @param string $fontfile 字体文件路径
-     * @param string $text 要度量的字符串
+     * @param string $text     要度量的字符串
      * @return array 8个元素，失败时返回false
      */
     public static function ttfbbox($size, $angle, $fontfile, $text)
@@ -1394,13 +1393,13 @@ class Gd
 
     /**
      * 用 TrueType 字体向图像写入文本
-     * @param float $size 像素单位的字体大小
-     * @param float $angle 将被度量的角度大小
-     * @param int $x 左上角坐标x轴
-     * @param int $y 左上角坐标y轴
-     * @param int $color 颜色标识
+     * @param float  $size     像素单位的字体大小
+     * @param float  $angle    将被度量的角度大小
+     * @param int    $x        左上角坐标x轴
+     * @param int    $y        左上角坐标y轴
+     * @param int    $color    颜色标识
      * @param string $fontfile 字体文件路径
-     * @param string $text 要写入的文本
+     * @param string $text     要写入的文本
      * @return array 失败时返回false
      */
     public function ttftext($size, $angle, $x, $y, $color, $fontfile, $text)
@@ -1420,7 +1419,7 @@ class Gd
     /**
      * 将二进制 IPTC 数据嵌入到一幅 JPEG 图像中
      * @param string $iptcdata IPTC数据
-     * @param int $spool 标识
+     * @param int    $spool    标识
      * @return mixed
      */
     public function iptcEmbed($iptcdata, $spool = 0)
