@@ -8,21 +8,21 @@
       "email": "chenfengzhan@qq.com"
     }
   ],
-  "require": {
-    "php": ">=5.5.0",
-    "ext-gd": "*"
-  },
-  "require-dev": {
-    "ext-exif": "*",
-    "phpunit/phpunit": "~9.1.0"
-  },
-  "suggest": {
-    "php": ">=7.2.0",
-    "ext-exif": "*"
-  },
   "autoload": {
     "psr-4": {
       "fize\\image\\": "src"
     }
+  },
+  "require": {
+    "php": ">=7.0.0",
+    "ext-gd": "*"
+  },
+  "require-dev": {
+    "ext-exif": "*",
+    "phpunit/phpunit": "^9.5.0"
+  },
+  "suggest": {
+    "php": ">=7.2.0",
+    "ext-exif": "*"
   }
 }

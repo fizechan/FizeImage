@@ -13,13 +13,13 @@ class Image
      *
      * 参数 `$clip` :
      *   其中键为 "x"，"y"，"width" 和 "height"
-     * @param string $file_name 图像文件路径
-     * @param array  $affine    [ a0, b0, a1, b1, a2, b2 ]
-     * @param array  $clip      剪切区域
-     * @param string $to        保存路径，不指定时则覆盖原图片
+     * @param string      $file_name 图像文件路径
+     * @param array       $affine    [ a0, b0, a1, b1, a2, b2 ]
+     * @param array       $clip      剪切区域
+     * @param string|null $to        保存路径，不指定时则覆盖原图片
      * @return bool 成功时返回true，失败时返回false
      */
-    public static function affine($file_name, array $affine, array $clip = null, $to = null)
+    public static function affine(string $file_name, array $affine, array $clip = null, string $to = null): bool
     {
         if (is_null($to)) {
             $to = $file_name;
@@ -34,12 +34,12 @@ class Image
      *
      * 参数 `$rect` :
      *   其中键为 "x"，"y"，"width" 和 "height"
-     * @param string $file_name 图像文件路径
-     * @param array  $rect      裁剪区域
-     * @param string $to        保存路径，不指定时则覆盖原图片
+     * @param string      $file_name 图像文件路径
+     * @param array       $rect      裁剪区域
+     * @param string|null $to        保存路径，不指定时则覆盖原图片
      * @return bool 成功时返回true，失败时返回false
      */
-    public static function crop($file_name, array $rect, $to = null)
+    public static function crop(string $file_name, array $rect, string $to = null): bool
     {
         if (is_null($to)) {
             $to = $file_name;
@@ -51,14 +51,14 @@ class Image
 
     /**
      * 用给定角度旋转图像
-     * @param string $file_name          图像文件路径
-     * @param float  $angle              角度
-     * @param int    $bgd_color          指定旋转后未覆盖区域的颜色
-     * @param int    $ignore_transparent 如果被设为非零值，则透明色会被忽略。
-     * @param string $to                 保存路径，不指定时则覆盖原图片
+     * @param string      $file_name          图像文件路径
+     * @param float       $angle              角度
+     * @param int         $bgd_color          指定旋转后未覆盖区域的颜色
+     * @param int         $ignore_transparent 如果被设为非零值，则透明色会被忽略。
+     * @param string|null $to                 保存路径，不指定时则覆盖原图片
      * @return bool 成功时返回true，失败时返回false
      */
-    public static function rotate($file_name, $angle, $bgd_color = 0, $ignore_transparent = 0, $to = null)
+    public static function rotate(string $file_name, float $angle, int $bgd_color = 0, int $ignore_transparent = 0, string $to = null): bool
     {
         if (is_null($to)) {
             $to = $file_name;
@@ -70,14 +70,14 @@ class Image
 
     /**
      * 使用给定的新宽度和高度缩放图像
-     * @param string $file_name  图像文件路径
-     * @param int    $new_width  新宽度
-     * @param int    $new_height 新高度，-1表示自动计算
-     * @param int    $mode       模式
-     * @param string $to         保存路径，不指定时则覆盖原图片
+     * @param string      $file_name  图像文件路径
+     * @param int         $new_width  新宽度
+     * @param int         $new_height 新高度，-1表示自动计算
+     * @param int         $mode       模式
+     * @param string|null $to         保存路径，不指定时则覆盖原图片
      * @return bool 成功时返回true，失败时返回false
      */
-    public static function scale($file_name, $new_width, $new_height = -1, $mode = 3, $to = null)
+    public static function scale(string $file_name, int $new_width, int $new_height = -1, int $mode = 3, string $to = null): bool
     {
         if ($new_width == -1 && $new_height == -1) {
             return false;
@@ -96,12 +96,12 @@ class Image
 
     /**
      * 使用给定模式翻转图像
-     * @param string $file_name 图像文件路径
-     * @param int    $mode      常量IMG_FLIP_*
-     * @param string $to        保存路径，不指定时则覆盖原图片
+     * @param string      $file_name 图像文件路径
+     * @param int         $mode      常量IMG_FLIP_*
+     * @param string|null $to        保存路径，不指定时则覆盖原图片
      * @return bool 成功时返回true，失败时返回false
      */
-    public static function flip($file_name, $mode, $to = null)
+    public static function flip(string $file_name, int $mode, string $to = null): bool
     {
         if (is_null($to)) {
             $to = $file_name;
@@ -116,14 +116,14 @@ class Image
      *
      * 参数 `$coord` :
      *   支持键名[left、right、top、bottom]
-     * @param string $file_name 图像文件路径
-     * @param string $source    水印文件路径
-     * @param array  $coord     水印坐标
-     * @param int    $alpha     透明度
-     * @param string $to        保存路径，不指定时则覆盖原图片
+     * @param string      $file_name 图像文件路径
+     * @param string      $source    水印文件路径
+     * @param array       $coord     水印坐标
+     * @param int         $alpha     透明度
+     * @param string|null $to        保存路径，不指定时则覆盖原图片
      * @return bool
      */
-    public static function water($file_name, $source, array $coord, $alpha = 100, $to = null)
+    public static function water(string $file_name, string $source, array $coord, int $alpha = 100, string $to = null): bool
     {
         if (is_null($to)) {
             $to = $file_name;
@@ -164,17 +164,17 @@ class Image
      *
      * 参数 `$coord` :
      *   支持键名[left、right、top、bottom]
-     * @param string $file_name 图像文件路径
-     * @param array  $coord     水印坐标
-     * @param string $text      水印文字
-     * @param string $font      字体文件路径
-     * @param int    $size      字体大小
-     * @param string $color     RGBA颜色值
-     * @param int    $angle     角度
-     * @param string $to        保存路径，不指定时则覆盖原图片
+     * @param string      $file_name 图像文件路径
+     * @param array       $coord     水印坐标
+     * @param string      $text      水印文字
+     * @param string      $font      字体文件路径
+     * @param int         $size      字体大小
+     * @param string      $color     RGBA颜色值
+     * @param int         $angle     角度
+     * @param string|null $to        保存路径，不指定时则覆盖原图片
      * @return bool
      */
-    public static function text($file_name, array $coord, $text, $font, $size, $color = '#00000000', $angle = 0, $to = null)
+    public static function text(string $file_name, array $coord, string $text, string $font, int $size, string $color = '#00000000', int $angle = 0, string $to = null): bool
     {
         $box = Gd::ttfbbox($size, $angle, $font, $text);
         $minx = min($box[0], $box[2], $box[4], $box[6]);
