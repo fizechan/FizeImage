@@ -21,7 +21,7 @@ class TestExif extends TestCase
         $exif = new Exif($file);
         $type = $exif->imagetype();
         var_dump($type);
-        self::assertEquals($type, IMAGETYPE_JPEG);
+        self::assertEquals(IMAGETYPE_JPEG, $type);
     }
 
     public function testReadData()
@@ -45,7 +45,7 @@ class TestExif extends TestCase
     {
         $value = Exif::tagname(256);
         var_dump($value);
-        self::assertEquals($value, 'ImageWidth');
+        self::assertEquals('ImageWidth', $value);
     }
 
     public function testThumbnail()

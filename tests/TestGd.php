@@ -69,7 +69,8 @@ class TestGd extends TestCase
             'truecolor' => true
         ];
         $img = new Gd(null, null, $options);
-        $img->create(200, 200);
+        $rst = $img->create(200, 200);
+        self::assertIsResource($rst);
         $white = $img->colorAllocate(255, 255, 255);
         //$black = $img->colorAllocate( 0, 0, 0);
         $img->arc(100, 100, 150, 150, 0, 360, $white);
