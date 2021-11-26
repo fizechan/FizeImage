@@ -1,6 +1,6 @@
 <?php
 
-namespace fize\image;
+namespace Fize\Image;
 
 /**
  * GIF图片编码器

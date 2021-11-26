@@ -1,6 +1,6 @@
 <?php
 
-namespace fize\image;
+namespace Fize\Image;
 
 /**
  * 图像元数据操作类

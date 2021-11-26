@@ -1,6 +1,8 @@
 <?php
 
-use fize\image\Image;
+namespace Tests;
+
+use Fize\Image\Image;
 use PHPUnit\Framework\TestCase;
 
 class TestImage extends TestCase

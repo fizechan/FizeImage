@@ -1,7 +1,8 @@
 <?php
 
+namespace Tests;
 
-use fize\image\Exif;
+use Fize\Image\Exif;
 use PHPUnit\Framework\TestCase;
 
 class TestExif extends TestCase

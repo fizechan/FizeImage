@@ -1,6 +1,6 @@
 <?php
 
-namespace fize\image;
+namespace Fize\Image;
 
 use Exception;
 

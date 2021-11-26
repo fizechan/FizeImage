@@ -1,6 +1,8 @@
 <?php
 
-use fize\image\Gd;
+namespace Tests;
+
+use Fize\Image\Gd;
 use PHPUnit\Framework\TestCase;
 
 

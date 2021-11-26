@@ -10,19 +10,24 @@
   ],
   "autoload": {
     "psr-4": {
-      "fize\\image\\": "src"
+      "Fize\\Image\\": "src"
     }
   },
   "require": {
     "php": ">=7.0.0",
     "ext-gd": "*"
   },
-  "require-dev": {
-    "ext-exif": "*",
-    "phpunit/phpunit": "^9.5.0"
-  },
   "suggest": {
     "php": ">=7.2.0",
     "ext-exif": "*"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
+    }
+  },
+  "require-dev": {
+    "ext-exif": "*",
+    "phpunit/phpunit": "^9.5.0"
   }
 }

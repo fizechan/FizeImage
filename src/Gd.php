@@ -1,6 +1,6 @@
 <?php
 
-namespace fize\image;
+namespace Fize\Image;
 
 /**
  * 图片GD底层类
