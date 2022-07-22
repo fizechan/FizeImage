@@ -1051,6 +1051,7 @@ class Gd
      * @param int   $num_points 顶点数量
      * @param int   $color      颜色标识
      * @return bool
+     * @since PHP7.2
      */
     public function openPolygon(array $points, int $num_points, int $color): bool
     {
@@ -1262,6 +1263,7 @@ class Gd
      * @param int $x2 右下角坐标x轴
      * @param int $y2 右下角坐标y轴
      * @return bool
+     * @since PHP7.2
      */
     public function setClip(int $x1, int $y1, int $x2, int $y2): bool
     {
